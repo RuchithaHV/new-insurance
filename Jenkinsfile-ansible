@@ -13,7 +13,7 @@ node{
         sh 'docker build -t ruchithahv/insuranceproject:1.0 .'
     }
     stage('docker login and pushing'){
-        sh 'docker login -u ruchithahv -p PAss@1234'
+        sh 'docker login -u username -p password'
         sh 'docker push ruchithahv/insuranceproject:1.0 '
     }
     stage('deployment using ansible'){
