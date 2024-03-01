@@ -12,13 +12,13 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 // execute 'terraform init' command
-                sh 'terraform init'
+                sh 'sudo terraform init'
             }
         }      
         stage('Terraform Apply') {
             steps {
                 // execute 'terraform apply' command with auto-approval
-                sh 'terraform apply -auto-approve '
+                sh 'sudo terraform apply -auto-approve '
             }
         }
     }
