@@ -1,0 +1,22 @@
+node{
+    stage('git checkout'){
+        git 'https://github.com/RuchithaHV/new-insurance'
+    }
+    stage('code building'){
+        echo 'building the code'
+        sh 'mvn clean package'
+    }
+    stage('HTML Report'){
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/insurance_project/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+    }
+    stage('Building image'){
+        sh 'docker build -t ruchithahv/insuranceproject:1.0 .'
+    }
+    stage('docker login and pushing'){
+        sh 'docker login -u ruchithahv -p PAss@1234'
+        sh 'docker push ruchithahv/insuranceproject:1.0 '
+    }
+    stage('deployment using ansible'){
+        ansiblePlaybook become: true, credentialsId: 'ansible_project', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml'
+    }
+}
