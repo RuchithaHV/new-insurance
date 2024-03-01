@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your Terraform scripts from version control
+                git 'https://github.com/RuchithaHV/new-insurance.git'
+            }
+        }
+        
+        stage('Terraform Init') {
+            steps {
+                // execute 'terraform init' command
+                sh 'terraform init'
+            }
+        }
+        
+        stage('Terraform Plan') {
+            steps {
+                // execute 'terraform plan' command
+                sh 'terraform plan'
+            }
+        }
+        
+        stage('Terraform Apply') {
+            steps {
+                // execute 'terraform apply' command with auto-approval
+                sh 'terraform apply -auto-approve '
+            }
+        }
+        
+        stage('Terraform Destroy') {
+            steps {
+                // execute 'terraform apply' command with auto-approval
+                sh 'terraform destroy -auto-approve'
+            }
+        }
+    }
+    
