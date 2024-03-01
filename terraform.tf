@@ -10,7 +10,7 @@ terraform {
 
 # Configure the AWS provider
 provider "aws" {
-  region = "ap-south-1"
+  region = "us-east-1"
 }
 # Creating a VPC
 resource "aws_vpc" "proj-vpc" {
@@ -46,7 +46,7 @@ resource "aws_route_table" "proj-rt" {
 resource "aws_subnet" "proj-subnet" {
  vpc_id = aws_vpc.proj-vpc.id
  cidr_block = "10.0.1.0/24"
- availability_zone = "ap-south-1b"
+ availability_zone = "us-east-1a"
  tags = {
  Name = "subnet1"
  }
@@ -125,11 +125,11 @@ resource "aws_eip" "proj-eip" {
 
 
 # Creating an ubuntu EC2 instance
-resource "aws_instance" "Prod-Server" {
- ami = "ami-0ef82eeba2c7a0eeb"
+resource "aws_instance" "new-prod-server" {
+ ami = "ami-07d9b9ddc6cd8dd30"
  instance_type = "t2.micro"
- availability_zone = "ap-south-1b"
- key_name = "chefkeypair"
+ availability_zone = "us-east-1a"
+ key_name = "insurance_key"
  network_interface {
  device_index = 0
  network_interface_id = aws_network_interface.proj-ni.id
@@ -139,10 +139,10 @@ resource "aws_instance" "Prod-Server" {
      sudo apt-get update -y
      sudo apt install docker.io -y
      sudo systemctl enable docker
-     sudo docker run -itd -p 8085:8081 vikuldocker/akshatinsurance:1.0
+     sudo docker run -itd -p 8085:8081 ruchithahv/insuranceproject:1.0
      sudo docker start $(docker ps -aq)
  EOF
  tags = {
- Name = "Prod-Server"
+ Name = "new-prod-server"
  }
 }
