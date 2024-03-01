@@ -1,0 +1,18 @@
+node{
+    stage('code checkout'){
+        git 'https://github.com/RuchithaHV/new-insurance'
+    }
+    stage('deployment'){
+        echo 'deploying'
+        sh 'sudo kubectl apply -f kubernetesfile.yml'
+    }
+    stage('show'){
+        sh 'sudo kubectl get all'
+        
+    }
+    stage('show pods'){
+        sh 'sudo kubectl get pods -o wide'
+        sh 'curl http://checkip.amazonaws.com'
+        
+    }
+}
