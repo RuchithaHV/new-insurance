@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: insurance
-          image: ruchithahv/insurance:1.0
+          image: ruchithahv/insuranceproject:1.0
           ports:
             - containerPort: 8081
           env:
